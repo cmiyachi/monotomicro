@@ -1,5 +1,8 @@
 I based my decisions on a post from a mentor:
-"You can start to extract person and location services out from the monolithic app. As for gRPC, I would suggest that you refactor the location service from REST to gRPC because of the expected high volume of location data. For kafka, you can make the location service send messages to kafka and then create a consumer to consume the messages."
+"You can start to extract person and location services out from the monolithic app. 
+As for gRPC, I would suggest that you refactor the location service from REST to gRPC 
+because of the expected high volume of location data. For kafka, you can make the location 
+service send messages to kafka and then create a consumer to consume the messages."
 
 Here are my decisions:
 
