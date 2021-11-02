@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: person-location-producer-svc
+  name: person-location-producer-svc
+spec:
+  ports:
+  - name: "5005"
+    port: 5005
+    targetPort: 5005
+    nodePort: 30007
+  selector:
+    service: person-location-producer-svc
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: person-location-producer-svc
+  name: person-location-producer-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: person-location-producer-svc
+  template:
+    metadata:
+      labels:
+        service: person-location-producer-svc
+    spec:
+      containers:
+      - image: miyachi/person-location-event-svc:latest
+        name: person-location-producer-svc
+        imagePullPolicy: Always
+        env:
+        - name: KAFKA_URL
+          valueFrom:
+            configMapKeyRef:
+              name: person-location-event-map
+              key: KAFKA_URL
+        - name: KAFKA_TOPIC
+          valueFrom:
+            configMapKeyRef:
+              name: person-location-event-map
+              key: KAFKA_TOPIC
+        - name: PYTHONUNBUFFERED
+          value: '0'
+      restartPolicy: Always

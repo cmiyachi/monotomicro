@@ -1,0 +1,16 @@
+I based my decisions on a post from a mentor:
+"You can start to extract person and location services out from the monolithic app. As for gRPC, I would suggest that you refactor the location service from REST to gRPC because of the expected high volume of location data. For kafka, you can make the location service send messages to kafka and then create a consumer to consume the messages."
+
+Here are my decisions:
+
+
+	1. Extract the person and location pieces of the monoltih into two separate services
+	2. Use gRPC for the location service because there will be high volume of location data and gRPC is faster than REST. 
+	3. Use Kafka for the location service - this service will send messages to kafka and then a consumer will subscribe and consume the messages for the app. 
+	4. Description of Services and Interfaces
+		a. Person / REST - The front end uses this API to get and put people into the database.  A future improvement would be to separate out this data into its own separate database. 
+		b. Connection /REST - This gets people who are close together to create a connection.  
+		c. Location / REST - used by the front end to get locations stored in the database.  
+		d. Person Location / gRPC - gets the location data from a mobile device and makes it available to consumers. The consumer gets the location from kafka and stores it in the database.  
+		e. Kafka/Zookeeper - service that runs this message handler.  
+s

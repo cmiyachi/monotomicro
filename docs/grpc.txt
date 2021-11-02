@@ -1,0 +1,21 @@
+Test gRPC with Kafka
+
+syntax = "proto3";
+
+message PersonLocationEventMessage {
+  int32 userId = 1;
+  int32 latitude = 2;
+  int32 longitude = 3;
+}
+
+service ItemService {
+  rpc Create(PersonLocationEventMessage) returns (PersonLocationEventMessage);
+}
+
+How to Make a  Request
+
+'python modules/person-location-event-service/gps_sim.py'
+
+The database can be checked and you can see the data stored there.  
+
+
